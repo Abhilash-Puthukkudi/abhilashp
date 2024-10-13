@@ -73,7 +73,7 @@ class _SuggesionsListState extends State<SuggesionsList> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  context.read<HomeBloc>().add(LoadProfileEvent(profileId: state.allMatchList[index].id.toString()));
+                                  context.read<HomeBloc>().add(LoadProfileEvent(profileId: state.sugesstionsList[index].id.toString()));
                                   Navigator.pushNamed(context, RouterConstants.profileRoute);
                                 },
                                 child: SizedBox(
@@ -86,7 +86,7 @@ class _SuggesionsListState extends State<SuggesionsList> {
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(index == 0 ? 12 : 0)),
                                           child: CachedNetworkImage(
-                                            imageUrl: "",
+                                            imageUrl: "https://xsgames.co/randomusers/assets/avatars/${state.sugesstionsList[index].gender.toString()}/$index.jpg",
                                             fit: BoxFit.cover, // Fills the space and removes gaps
                                             placeholder: (context, url) => Skeleton.ignore(
                                               child: Skeletonizer(
@@ -155,32 +155,30 @@ class _SuggesionsListState extends State<SuggesionsList> {
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
-                                                  Container(
-                                                    child: Row(
-                                                      mainAxisSize: MainAxisSize.max,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                                      children: [
-                                                        rawFlexible(
-                                                          Text(
-                                                            "${state.sugesstionsList[index].user?.firstName ?? ""} ${state.sugesstionsList[index].user?.lastName ?? ""}",
-                                                            maxLines: 1,
-                                                            overflow: TextOverflow.clip,
-                                                            style: AppTypography.avacadoMedium.copyWith(color: AppColors.white),
-                                                          ),
+                                                  Row(
+                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisAlignment: MainAxisAlignment.start,
+                                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                                    children: [
+                                                      rawFlexible(
+                                                        Text(
+                                                          "${state.sugesstionsList[index].user?.firstName ?? ""} ${state.sugesstionsList[index].user?.lastName ?? ""}",
+                                                          maxLines: 1,
+                                                          overflow: TextOverflow.clip,
+                                                          style: AppTypography.avacadoMedium.copyWith(color: AppColors.white),
                                                         ),
-                                                        const SizedBox(width: 2), // Adjust the width to control the distance
-                                                        (state.sugesstionsList[index].isVerified ?? false)
-                                                            ? Icon(
-                                                                Icons.verified,
-                                                                color: AppColors.verifiedColor,
-                                                                size: 17.h,
-                                                              )
-                                                            : SizedBox(
-                                                                width: 17.w,
-                                                              ),
-                                                      ],
-                                                    ),
+                                                      ),
+                                                      const SizedBox(width: 2), // Adjust the width to control the distance
+                                                      (state.sugesstionsList[index].isVerified ?? false)
+                                                          ? Icon(
+                                                              Icons.verified,
+                                                              color: AppColors.verifiedColor,
+                                                              size: 17.h,
+                                                            )
+                                                          : SizedBox(
+                                                              width: 17.w,
+                                                            ),
+                                                    ],
                                                   ),
                                                   rawFlexible(
                                                       Text("${AppHelper.calculateAge(state.sugesstionsList[index].dob.toString())}, ${AppHelper.convertCmToFeet(state.sugesstionsList[index].height.toString())}", maxLines: 1, style: AppTypography.avacadoMedium.copyWith(color: AppColors.white))),
@@ -201,41 +199,41 @@ class _SuggesionsListState extends State<SuggesionsList> {
                               BlocBuilder<HomeBloc, HomeState>(
                                 buildWhen: (previous, current) => previous.intrestStatus != current.intrestStatus,
                                 builder: (context, state) {
-                                  if (state.allMatchList[index].interestStatus == const InterestStatus()) {
+                                  if (state.sugesstionsList[index].interestStatus == const InterestStatus()) {
                                     return IntrestButton(
                                       onPressed: () {
-                                        context.read<HomeBloc>().add(CreateIntrestEvent(reciverId: state.allMatchList[index].id.toString(), senderID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(CreateIntrestEvent(reciverId: state.sugesstionsList[index].id.toString(), senderID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                     );
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.allMatchList[index].interestStatus!.sender.toString() == context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                  if (state.sugesstionsList[index].interestStatus!.interestStatus.toString() == 'pending' && state.sugesstionsList[index].interestStatus!.sender.toString() == context.read<AuthBloc>().state.loginModel.customerId.toString()) {
                                     return SentButton(onPressed: () {});
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                  if (state.sugesstionsList[index].interestStatus!.interestStatus.toString() == 'pending' && state.sugesstionsList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
                                     return SentRejectButton(
                                       onAcceptPressed: () {
-                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'accepted', senderID: state.allMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'accepted', senderID: state.sugesstionsList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                       onRejectPressed: () {
-                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'rejected', senderID: state.allMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'rejected', senderID: state.sugesstionsList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                     );
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'accepted') {
+                                  if (state.sugesstionsList[index].interestStatus!.interestStatus.toString() == 'accepted') {
                                     return ChatButton(onPressed: () {
-                                      if (state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.sender.toString()));
+                                      if (state.sugesstionsList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.sugesstionsList[index].interestStatus!.sender.toString()));
                                       } else {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.reciever.toString()));
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.sugesstionsList[index].interestStatus!.reciever.toString()));
                                       }
                                     });
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'rejected') {
+                                  if (state.sugesstionsList[index].interestStatus!.interestStatus.toString() == 'rejected') {
                                     return RejectedButton(onPressed: () {
-                                      if (state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.sender.toString()));
+                                      if (state.sugesstionsList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.sugesstionsList[index].interestStatus!.sender.toString()));
                                       } else {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.reciever.toString()));
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.sugesstionsList[index].interestStatus!.reciever.toString()));
                                       }
                                     });
                                   }

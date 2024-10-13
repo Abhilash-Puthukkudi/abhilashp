@@ -29,14 +29,14 @@ class _BottomNavBarState extends State<BottomNavigationScreen> {
     super.initState();
     screens = [
       const HomeView(),
-      Center(
+      const Center(
         child: Text("Fav Screen"),
       ),
-      Center(
+      const Center(
         child: Text("Chat Screen"),
       ),
-      Center(
-        child: const Text("Profile Screen"),
+      const Center(
+        child: Text("Profile Screen"),
       ),
     ];
     selectedIndex.value = widget.selectedIndex;

@@ -25,25 +25,19 @@ class SkeltonziedTile extends StatelessWidget {
             ),
             Expanded(
               child: ListView.builder(
-                physics: const BouncingScrollPhysics(
-                    decelerationRate: ScrollDecelerationRate.fast),
+                physics: const BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.fast),
                 scrollDirection: Axis.horizontal,
                 itemCount: 33,
                 itemBuilder: (context, index) {
                   return Container(
                       decoration: BoxDecoration(
-                        borderRadius: index == 0
-                            ? const BorderRadius.only(
-                                topLeft: Radius.circular(12))
-                            : null,
+                        borderRadius: index == 0 ? const BorderRadius.only(topLeft: Radius.circular(12)) : null,
                       ),
-                      margin: EdgeInsets.only(
-                          left: index == 0 ? 16.w : 0, right: 9.w),
+                      margin: EdgeInsets.only(left: index == 0 ? 16.w : 0, right: 9.w),
                       width: 140.w,
                       height: 200.h,
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment
-                            .stretch, // Ensures full width usage
+                        crossAxisAlignment: CrossAxisAlignment.stretch, // Ensures full width usage
                         children: [
                           SizedBox(
                             height: 180.h,
@@ -52,101 +46,60 @@ class SkeltonziedTile extends StatelessWidget {
                               children: [
                                 SizedBox(
                                   height: 170.h,
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(
-                                              index == 0 ? 12 : 0)),
-                                      child: Container()),
+                                  child: ClipRRect(borderRadius: BorderRadius.only(topLeft: Radius.circular(index == 0 ? 12 : 0)), child: Container()),
                                 ),
                                 Positioned.fill(
                                     child: Container(
                                   decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                          begin: Alignment.bottomCenter,
-                                          end: Alignment.topCenter,
-                                          colors: [
-                                        Colors.black.withOpacity(
-                                            0.8), // Black at the bottom
-                                        Colors.grey.withOpacity(
-                                            0.4), // Slight grey in the middle
-                                        Colors.transparent,
-                                      ])),
-                                  padding: EdgeInsets.only(
-                                      left: 0.w,
-                                      bottom: 10.h,
-                                      top: 15.h,
-                                      right: 8.w),
+                                      gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [
+                                    Colors.black.withOpacity(0.8), // Black at the bottom
+                                    Colors.grey.withOpacity(0.4), // Slight grey in the middle
+                                    Colors.transparent,
+                                  ])),
+                                  padding: EdgeInsets.only(left: 0.w, bottom: 10.h, top: 15.h, right: 8.w),
                                   child: Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         children: [
                                           Container(
+                                            width: 20.w,
+                                            height: 24.h,
+                                            decoration: const BoxDecoration(color: AppColors.grey, borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5))),
                                             child: Icon(
                                               Icons.star,
                                               color: AppColors.goldenColor,
                                               size: 15.h,
                                             ),
-                                            width: 20.w,
-                                            height: 24.h,
-                                            decoration: const BoxDecoration(
-                                                color: AppColors.grey,
-                                                borderRadius: BorderRadius.only(
-                                                    topLeft: Radius.circular(5),
-                                                    topRight:
-                                                        Radius.circular(5))),
                                           )
                                         ],
                                       ),
                                       Expanded(
                                         child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Row(
                                               mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.end,
                                               children: [
                                                 Text(
                                                   "Abhilash P",
                                                   maxLines: 1,
-                                                  style: AppTypography
-                                                      .avacadoMedium
-                                                      .copyWith(
-                                                          color:
-                                                              AppColors.white),
+                                                  style: AppTypography.avacadoMedium.copyWith(color: AppColors.white),
                                                 ),
 
-                                                const SizedBox(
-                                                    width:
-                                                        2), // Adjust the width to control the distance
+                                                const SizedBox(width: 2), // Adjust the width to control the distance
                                                 Icon(
                                                   Icons.verified,
-                                                  color:
-                                                      AppColors.verifiedColor,
+                                                  color: AppColors.verifiedColor,
                                                   size: 17.h,
                                                 ),
                                               ],
                                             ),
-                                            Text("24yrs,5'5",
-                                                maxLines: 1,
-                                                style: AppTypography
-                                                    .avacadoMedium
-                                                    .copyWith(
-                                                        color:
-                                                            AppColors.white)),
-                                            Text("Kozhikode, Kerala",
-                                                maxLines: 1,
-                                                style: AppTypography
-                                                    .avacadoMedium
-                                                    .copyWith(
-                                                        color: AppColors.white))
+                                            Text("24yrs,5'5", maxLines: 1, style: AppTypography.avacadoMedium.copyWith(color: AppColors.white)),
+                                            Text("Kozhikode, Kerala", maxLines: 1, style: AppTypography.avacadoMedium.copyWith(color: AppColors.white))
                                           ],
                                         ),
                                       ),

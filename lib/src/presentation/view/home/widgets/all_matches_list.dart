@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -73,6 +72,7 @@ class _AllMatchesListState extends State<AllMatchesList> {
                       scrollDirection: Axis.horizontal,
                       itemCount: state.allMatchList.length,
                       itemBuilder: (context, index) {
+                        // log(state.allMatchList[index].gender.toString());
                         return Container(
                             decoration: BoxDecoration(
                               borderRadius: index == 0 ? const BorderRadius.only(topLeft: Radius.circular(12)) : null,
@@ -94,11 +94,11 @@ class _AllMatchesListState extends State<AllMatchesList> {
                                       alignment: Alignment.center,
                                       children: [
                                         SizedBox(
-                                          height: 170.h,
+                                          height: 180.h,
                                           child: ClipRRect(
                                             borderRadius: BorderRadius.only(topLeft: Radius.circular(index == 0 ? 12 : 0)),
                                             child: CachedNetworkImage(
-                                              imageUrl: "",
+                                              imageUrl: "https://xsgames.co/randomusers/assets/avatars/${state.allMatchList[index].gender.toString()}/$index.jpg",
                                               fit: BoxFit.cover, // Fills the space and removes gaps
                                               placeholder: (context, url) => Skeleton.ignore(
                                                 child: Skeletonizer(

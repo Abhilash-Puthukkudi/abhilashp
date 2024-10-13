@@ -13,22 +13,18 @@ import 'package:machine_test/src/presentation/view/auth/widget/login_text_filed.
 
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
-  final TextEditingController _usernameController =
-      TextEditingController(text: "AbhilashP");
-  final TextEditingController _passwordController =
-      TextEditingController(text: "User@123");
+  final TextEditingController _usernameController = TextEditingController(text: "AbhilashP");
+  final TextEditingController _passwordController = TextEditingController(text: "User@123");
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
-      listenWhen: (previous, current) =>
-          previous.loginStatus != current.loginStatus,
+      listenWhen: (previous, current) => previous.loginStatus != current.loginStatus,
       listener: (context, state) {
         if (state.loginStatus is StatusSuccess) {
           Navigator.popAndPushNamed(context, RouterConstants.homeRoute);
         } else if (state.loginStatus is StatusFailure) {
           final status = state.loginStatus as StatusFailure;
-          AppHelper.showCustomSnackBar(
-              context, status.errorMessage, Colors.red);
+          AppHelper.showCustomSnackBar(context, status.errorMessage, Colors.red);
         }
       },
       child: Scaffold(
@@ -60,8 +56,7 @@ class SignInScreen extends StatelessWidget {
                   Text(
                     "Sign in with your username and password",
                     textAlign: TextAlign.center,
-                    style: AppTypography.avacadoThin
-                        .copyWith(color: const Color(0xFF757575)),
+                    style: AppTypography.avacadoThin.copyWith(color: const Color(0xFF757575)),
                   ),
                   // const SizedBox(height: 16),
                   SizedBox(
@@ -88,27 +83,20 @@ class SignInScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 15.h),
                         BlocBuilder<AuthBloc, AuthState>(
-                          buildWhen: (previous, current) =>
-                              previous.loginStatus != current.loginStatus,
+                          buildWhen: (previous, current) => previous.loginStatus != current.loginStatus,
                           builder: (context, state) {
                             return ElevatedButton(
                               onPressed: () {
-                                PmLoginModel pmLoginModel = PmLoginModel(
-                                    username: _usernameController.text,
-                                    password: _passwordController.text);
-                                context
-                                    .read<AuthBloc>()
-                                    .add(LoginEvent(loginModel: pmLoginModel));
+                                PmLoginModel pmLoginModel = PmLoginModel(username: _usernameController.text.trim(), password: _passwordController.text.trim());
+                                context.read<AuthBloc>().add(LoginEvent(loginModel: pmLoginModel));
                               },
                               style: ElevatedButton.styleFrom(
                                 elevation: 0,
                                 backgroundColor: const Color(0xFFFF7643),
-                                foregroundColor:
-                                    const Color.fromARGB(255, 62, 32, 32),
+                                foregroundColor: const Color.fromARGB(255, 62, 32, 32),
                                 minimumSize: const Size(double.infinity, 48),
                                 shape: const RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(16)),
+                                  borderRadius: BorderRadius.all(Radius.circular(16)),
                                 ),
                               ),
                               child: state.loginStatus is StatusLoading
@@ -118,15 +106,18 @@ class SignInScreen extends StatelessWidget {
                                       child: CircularProgressIndicator(
                                         color: AppColors.white,
                                         strokeCap: StrokeCap.round,
-                                        backgroundColor: AppColors.primaryColor
-                                            .withOpacity(0.8),
+                                        backgroundColor: AppColors.primaryColor.withOpacity(0.8),
                                       ),
                                     )
-                                  : Text(
-                                      "Continue",
-                                      style: AppTypography.avacadoExtraBold
-                                          .copyWith(color: AppColors.white),
-                                    ),
+                                  : state.loginStatus is StatusSuccess
+                                      ? Text(
+                                          "Please Wait",
+                                          style: AppTypography.avacadoExtraBold.copyWith(color: AppColors.white),
+                                        )
+                                      : Text(
+                                          "Continue",
+                                          style: AppTypography.avacadoExtraBold.copyWith(color: AppColors.white),
+                                        ),
                             );
                           },
                         )

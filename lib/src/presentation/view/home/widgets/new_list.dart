@@ -82,11 +82,11 @@ class _NewListState extends State<NewList> {
                                     alignment: Alignment.center,
                                     children: [
                                       SizedBox(
-                                        height: 170.h,
+                                        height: 180.h,
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.only(topLeft: Radius.circular(index == 0 ? 12 : 0)),
                                           child: CachedNetworkImage(
-                                            imageUrl: "",
+                                            imageUrl: "https://xsgames.co/randomusers/assets/avatars/${state.newMatchList[index].gender.toString()}/$index.jpg",
                                             fit: BoxFit.cover, // Fills the space and removes gaps
                                             placeholder: (context, url) => Skeleton.ignore(
                                               child: Skeletonizer(
@@ -195,41 +195,41 @@ class _NewListState extends State<NewList> {
                               BlocBuilder<HomeBloc, HomeState>(
                                 buildWhen: (previous, current) => previous.intrestStatus != current.intrestStatus,
                                 builder: (context, state) {
-                                  if (state.allMatchList[index].interestStatus == const InterestStatus()) {
+                                  if (state.newMatchList[index].interestStatus == const InterestStatus()) {
                                     return IntrestButton(
                                       onPressed: () {
-                                        context.read<HomeBloc>().add(CreateIntrestEvent(reciverId: state.allMatchList[index].id.toString(), senderID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(CreateIntrestEvent(reciverId: state.newMatchList[index].id.toString(), senderID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                     );
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.allMatchList[index].interestStatus!.sender.toString() == context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                  if (state.newMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.newMatchList[index].interestStatus!.sender.toString() == context.read<AuthBloc>().state.loginModel.customerId.toString()) {
                                     return SentButton(onPressed: () {});
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                  if (state.newMatchList[index].interestStatus!.interestStatus.toString() == 'pending' && state.newMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
                                     return SentRejectButton(
                                       onAcceptPressed: () {
-                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'accepted', senderID: state.allMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'accepted', senderID: state.newMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                       onRejectPressed: () {
-                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'rejected', senderID: state.allMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
+                                        context.read<HomeBloc>().add(AcceptRejectIntrestEvent(status: 'rejected', senderID: state.newMatchList[index].interestStatus!.sender.toString(), currentUserID: context.read<AuthBloc>().state.loginModel.customerId.toString()));
                                       },
                                     );
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'accepted') {
+                                  if (state.newMatchList[index].interestStatus!.interestStatus.toString() == 'accepted') {
                                     return ChatButton(onPressed: () {
-                                      if (state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.sender.toString()));
+                                      if (state.newMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.newMatchList[index].interestStatus!.sender.toString()));
                                       } else {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.reciever.toString()));
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.newMatchList[index].interestStatus!.reciever.toString()));
                                       }
                                     });
                                   }
-                                  if (state.allMatchList[index].interestStatus!.interestStatus.toString() == 'rejected') {
+                                  if (state.newMatchList[index].interestStatus!.interestStatus.toString() == 'rejected') {
                                     return RejectedButton(onPressed: () {
-                                      if (state.allMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.sender.toString()));
+                                      if (state.newMatchList[index].interestStatus!.sender.toString() != context.read<AuthBloc>().state.loginModel.customerId.toString()) {
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.newMatchList[index].interestStatus!.sender.toString()));
                                       } else {
-                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.allMatchList[index].interestStatus!.reciever.toString()));
+                                        context.read<HomeBloc>().add(UndoIntrestEvent(recieverID: state.newMatchList[index].interestStatus!.reciever.toString()));
                                       }
                                     });
                                   }

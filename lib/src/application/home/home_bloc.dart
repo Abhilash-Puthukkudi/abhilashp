@@ -43,7 +43,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
       final res = await _iHomeRepository.undoIntrest(reciverID: event.recieverID);
 
-      if (res.respCode == 1) {
+      if (res.object == 1) {
         List<UserData> allMatchList = state.allMatchList;
         List<UserData> allSugetionsList = state.sugesstionsList;
         List<UserData> allNewList = state.newMatchList;
@@ -65,7 +65,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         );
       } else {
         emit(state.copyWith(
-          intrestStatus: StatusFailure(res.message ?? ""),
+          intrestStatus: StatusFailure("${res.message ?? ""} object : ${res.object}"),
         ));
       }
     } on ApiFailure catch (e) {
@@ -145,6 +145,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         final int userIndexFromNewList = state.newMatchList.indexWhere((user) => user.id.toString() == event.reciverId.toString());
         final InterestStatus interestStatus = InterestStatus(interestStatus: "pending", reciever: int.parse(event.reciverId), sender: int.parse(event.senderID));
         CustomerData profileData = state.profileData;
+
         if (profileData.id != null) {
           profileData = profileData.copyWith(interestStatus: interestStatus);
         }

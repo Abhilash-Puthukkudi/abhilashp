@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:machine_test/app/router/router_constants.dart';
 import 'package:machine_test/src/application/auth/auth_bloc.dart';
 import 'package:machine_test/src/application/core/status.dart';
+import 'package:machine_test/src/application/home/home_bloc.dart';
 import 'package:machine_test/src/presentation/core/constants/app_colors.dart';
 import 'package:machine_test/src/presentation/core/constants/app_helper.dart';
 import 'package:machine_test/src/presentation/core/constants/app_images.dart';
@@ -20,17 +20,30 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<AuthBloc, AuthState>(
-      listenWhen: (previous, current) => previous.logoutStatus != current.logoutStatus,
-      listener: (context, state) {
-        if (state.logoutStatus is StatusSuccess) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RouterConstants.loginRoute,
-            (route) => false,
-          );
-        }
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<AuthBloc, AuthState>(
+          listenWhen: (previous, current) => previous.logoutStatus != current.logoutStatus,
+          listener: (context, state) {
+            if (state.logoutStatus is StatusSuccess) {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                RouterConstants.loginRoute,
+                (route) => false,
+              );
+            }
+          },
+        ),
+        BlocListener<HomeBloc, HomeState>(
+          listenWhen: (previous, current) => previous.intrestStatus != current.intrestStatus,
+          listener: (context, state) {
+            if (state.intrestStatus is StatusFailure) {
+              final status = state.intrestStatus as StatusFailure;
+              AppHelper.showCustomSnackBar(context, status.errorMessage, Colors.red);
+            }
+          },
+        ),
+      ],
       child: Scaffold(
         body: CustomScrollView(
           slivers: <Widget>[

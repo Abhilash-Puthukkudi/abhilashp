@@ -31,7 +31,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       value: '',
     );
     emit(
-      state.copyWith(logoutStatus: StatusSuccess(), loginModel: const LoginModel()),
+      state.copyWith(logoutStatus: StatusSuccess(), loginModel: const LoginModel(), loginStatus: const StatusInitial()),
     );
   }
 

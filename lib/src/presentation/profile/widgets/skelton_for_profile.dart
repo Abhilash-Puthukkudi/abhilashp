@@ -59,7 +59,11 @@ class SkeltonProfile extends StatelessWidget {
                       bottom: 1.h,
                       left: ScreenUtil().screenWidth - 197.w,
                       right: 16.w,
-                      child: const ProfileIntrestButton(),
+                      child: ProfileIntrestButton(
+                        color: AppColors.goldenColor,
+                        ontap: () {},
+                        text: "sent button",
+                      ),
                     ),
                   ],
                 ),

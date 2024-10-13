@@ -9,8 +9,9 @@ class CommonResponse extends Equatable {
   final int? respCode;
   final String? data;
   final String? message;
+  final int? object;
 
-  const CommonResponse({this.respCode, this.data, this.message});
+  const CommonResponse({this.respCode, this.data, this.message, this.object});
 
   factory CommonResponse.fromJson(Map<String, dynamic> json) {
     return _$CommonResponseFromJson(json);
@@ -19,5 +20,5 @@ class CommonResponse extends Equatable {
   Map<String, dynamic> toJson() => _$CommonResponseToJson(this);
 
   @override
-  List<Object?> get props => [respCode, data, message];
+  List<Object?> get props => [respCode, data, message, object];
 }
